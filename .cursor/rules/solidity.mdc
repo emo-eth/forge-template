@@ -4,7 +4,7 @@ globs: *.sol
 alwaysApply: false
 ---
 
-# Your rule content
+# Solidity Rules
 
 ## Imports
 - Prefer the `solady` dependency over `OpenZeppelin`
@@ -15,6 +15,8 @@ alwaysApply: false
 ## Errors
 - Prefer `require(boolCondition, CustomError())` over `if (!boolCondition) { revert CustomError() }`
 - **Never** use string errors, ie, `require(boolCondition, "Custom Error")`
+- **Never** use `try/catch` to handle possible reverts when making external calls. Always do a low-level call and check the status of the call.
+  - `try/catch` only ever applies to external calls. It is not possible to "catch" errors normally in Solidity.
 
 ## Storage
 - When using EIP-7201 Namespaced Storage Layouts, use `$` as the storage variable, e.g., `MyStorage storage $ = MyStorageLib.getStorage()`.

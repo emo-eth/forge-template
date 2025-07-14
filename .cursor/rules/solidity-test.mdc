@@ -4,14 +4,6 @@ globs: *.t.sol
 alwaysApply: false
 ---
 
----
-
-description: Solidity test files
-globs: \*.t.sol
-alwaysApply: false
-
----
-
 # Solidity Tests
 
 ## Test Structure & Naming
@@ -32,7 +24,7 @@ alwaysApply: false
 
 ## Error Testing
 
--   Never use `vm.expectRevert()` without any data - always supply at least the 4-byte error selector
+-   **Never** use `vm.expectRevert()` without any data - always supply at least the 4-byte error selector. Testing with `vm.expectRevert()` without any data **should be considered a vulnerability** as it **cannot ensure the correct error is reverted**.
 -   When possible, supply entire revert data using `vm.expectRevert(abi.encodeWithSelector(MyContract.MyError.selector, ...args...))`
 -   Use `abi.encodeCall()` when appropriate for encoding function calls
 
@@ -73,9 +65,19 @@ alwaysApply: false
 -   Implementation contracts for upgradeable contracts should always disable initializers (if one doesn't, please bring it up and flag it as extremely important until it fixed). **This means you cannot call `initialize` or `reinitialize` on an implementation contract you've just deployed - they must be called via a proxy contract.**
     -   Do not `MyContract t = new MyContract(); t.reinitialize(...);` - this will fail.
 
+## Upgradeable Contracts
+- Use the Deterministic Proxy Factory and its DeterministicProxyFactoryFixture to deploy proxies in tests and then upgrade them to the appropriate implementation contract.
+- Test that implementations' initializers are disabled by deploying a new implementation instance and then try to call `initialize` on it. It should revert with `InvalidInitialization()`.
+- **CRITICAL** Always test that public `reinitialize` functions (any `reinitializer` modifier) are gated to owner or some admin-equivalent "role." They should not be callable by anyone else.
+    - Always directly test the reinitializers. Do not test them via the `upgradeToAndCall` function. Reinitializers are necessarily public-facing and must be secured.
+- **CRITICAL** Always test that public `upgradeTo{AndCall}` functions are gated to owner or some admin-equivalent "role."
+  - Solady UUPS only implement `upgradeToAndCall` and not `upgradeTo`, which is for Beacon Proxies.
+- If you see these any of these tests are missing, you should add them without being prompted.
+- `reinitialize` and `upgradeToAndCall` are different, and both must be restricted.
+
 ## General Guidelines
 
--   Believe compiler errors over your own intuition
+-  Read compiler and test errors carefully and use them to inform how you fix them. Do not assume anything the error does not say.
     -   E.g., if it says "Data location must be storage, memory, or calldata" - fix the syntax according to the error rather than assuming you are missing an import
 
 ## Solidity Gotchas
