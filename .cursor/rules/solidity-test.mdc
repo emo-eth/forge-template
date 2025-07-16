@@ -6,6 +6,10 @@ alwaysApply: false
 
 # Solidity Tests
 
+## Philosophy
+
+-   Tests should be written according to the documented behavior of the contract, not the implementation. If you believe a test should pass based on the documentation you've read, do not fix the test to pass - raise the discrepancy between the documentation and the implementation to the user, and ask them to clarify or fix the discrepancy between the documentation and the implementation. E.g., if the struct says `xUsdDestination` is the address to mint to, but the implementation mints to `backingSource`, raise an issue. **Do not write tests that enshrine bugs**.
+
 ## Test Structure & Naming
 
 -   Test names should follow the pattern `test_functionName{_success,_fail_MySpecificError}`

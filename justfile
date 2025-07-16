@@ -2,8 +2,10 @@ slither-mutate:
     slither-mutate src --test-cmd='FOUNDRY_PROFILE=gambit forge test'
 test:
     forge bind-json && forge test -vvv
+install:
+    forge soldeer install
 build:
-    forge bind-json && forge build
+    forge soldeer install && forge bind-json && forge build
 gambit-mutate:
     gambit_runner generate src
 gambit-test:
