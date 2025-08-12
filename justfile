@@ -18,3 +18,5 @@ gambit-full:
     gambit_runner full --test-cmd 'FOUNDRY_PROFILE=gambit forge test' --build-cmd 'FOUNDRY_PROFILE=gambit forge build' src
 halmos:
     FOUNDRY_PROFILE=halmos halmos
+aderyn:
+    aderyn
