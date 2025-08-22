@@ -1,0 +1,23 @@
+{
+  "lib/create2-helpers": {
+    "tag": {
+      "name": "v0.5.0",
+      "rev": "1ec2822f5333e763fe3e95621fe335d1a2e40f4e"
+    }
+  },
+  "lib/deterministic-proxy-factory": {
+    "tag": {
+      "name": "v0.3.1",
+      "rev": "3ca188599ef1f30b745db50d5033db3c22f1b1e3"
+    }
+  },
+  "lib/forge-std": {
+    "tag": {
+      "name": "v1.10.0",
+      "rev": "8bbcf6e3f8f62f419e5429a0bd89331c85c37824"
+    }
+  },
+  "lib/halmos-cheatcodes": {
+    "rev": "6da4e692c357ba6d641a2e677a28298cac9f76ab"
+  }
+}
